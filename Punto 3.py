@@ -1,63 +1,89 @@
-#Elaborar un programa en Python que permita gestionar el inventario de un supermercado el cual permite registrar compras (suman productos en el inventario), ventas (restan al inventario de productos), el programa debe tener 2 opciones una de compra y otra de ventas, el programa debe validar que no se vendan productos que no tengan existencias es decir si tengo un producto tv y tiene 5 elementos disponibles no permita vender ejemplo 10 porque no posee la cantidad disponible, por otra parte se deben registrar los datos del producto código, nombre, existencias, precio unitario.
+'''
+inventario de un supermercado 
+registrar compras (suman productos en el inventario), 
+ventas (restan al inventario de productos), 
 
-inventario = {}
+2 opciones una de compra y otra de ventas, 
 
-def agregar_o_actualizar_producto():
-    codigo = input("Ingrese el código del producto: ")
-    nombre = input("Ingrese el nombre del producto: ")
-    cantidad = int(input("Ingrese la cantidad de productos: "))
-    precio = float(input("Ingrese el precio unitario del producto: "))
+validar que no se vendan productos que no tengan existencias 
+
+registrar los datos del producto código, nombre, existencias, precio unitario.
+'''
+import os
+
+# Inicialización de productos?
+codigoTV = '01'
+nombreTV = 'Televisor'
+existenciasTV = 0
+precioTV = 500
+
+codigoReloj = '02'
+nombreReloj = 'Reloj'
+existenciasReloj = 0
+precioReloj = 50
+
+control = True
+
+
+while control:
+    os.system('cls')
+    # Menú
+    print(f'\t.:Inventario actual:.\nProducto (existencias):.\n')
+    # Mostrar todos los productos con sus existencias
+    print(f'⮞ {nombreTV} #{codigoTV}: ({existenciasTV})')
+    print(f'⮞ {nombreReloj} #{codigoReloj}: ({existenciasReloj})')
+    print('..............................................................')
+
     
-    if codigo in inventario:
-        inventario[codigo]['existencias'] += cantidad
-        inventario[codigo]['precio'] = precio
-        print(f"Producto actualizado: {nombre}, existencias actuales: {inventario[codigo]['existencias']}.")
-    else:
-        inventario[codigo] = {'nombre': nombre, 'existencias': cantidad, 'precio': precio}
-        print(f"Producto agregado: {nombre}, cantidad: {cantidad}.")
-
-def vender_producto():
-    codigo = input("Ingrese el código del producto a vender: ")
-    cantidad = int(input("Ingrese la cantidad a vender: "))
-    
-    if codigo not in inventario:
-        print("Producto no encontrado en el inventario.")
-        return
-    
-    if inventario[codigo]['existencias'] < cantidad:
-        print(f"No hay suficientes existencias de {inventario[codigo]['nombre']} para vender. Disponibles: {inventario[codigo]['existencias']}.")
-    else:
-        inventario[codigo]['existencias'] -= cantidad
-        print(f"Producto vendido: {inventario[codigo]['nombre']}, cantidad vendida: {cantidad}, existencias restantes: {inventario[codigo]['existencias']}.")
-
-def mostrar_inventario():
-    if not inventario:
-        print("El inventario está vacío.")
-        return
-    for codigo, info in inventario.items():
-        print(f"Código: {codigo}, Nombre: {info['nombre']}, Existencias: {info['existencias']}, Precio: {info['precio']}")
-
-def main():
-    while True:
-        print("\nOpciones:")
-        print("1. Registrar compra de producto")
-        print("2. Registrar venta de producto")
-        print("3. Mostrar inventario")
-        print("4. Salir")
-        opcion = input("Seleccione una opción: ")
-
-        if opcion == '1':
-            agregar_o_actualizar_producto()
-        elif opcion == '2':
-            vender_producto()
-        elif opcion == '3':
-            mostrar_inventario()
-        elif opcion == '4':
-            print("Saliendo del programa...")
-            break
+    opcion = int(input('\n[0]Salir\n[1]Registrar compras\n[2]Registrar ventas\n-->['))
+    #Registrar compra de producto
+    if opcion == 1:
+        codigo= input('Código del producto --> ')
+        cantidad = int(input('Cantidad de producto--> '))
+        #Compra TV
+        if codigo == codigoTV:
+            existenciasTV += cantidad
+            print(f'{nombreTV} ({cantidad}) ✔ Compra exitosa')
+        #Compra Reloj
+        elif codigo == codigoReloj:
+            existenciasReloj += cantidad
+            print(f'{nombreReloj} ({cantidad}) ✔ Compra exitosa')
         else:
-            print("Opción no válida. Intente de nuevo.")
-
-if __name__ == "__main__":
-    main()
-
+            print('Producto no encontrado')
+        input('Enter para continuar')
+        
+    elif opcion == 2:
+        codigo= input('Código del producto --> ')
+        cantidad = int(input('Cantidad de producto a vender --> '))
+        #Venta TV
+        if codigo == codigoTV:
+            if existenciasTV >= cantidad:
+                existenciasTV -= cantidad
+                print(f'{nombreTV} ({cantidad}) ✔ Venta exitosa')
+            else:
+                print('ⓧ Error en la venta \nNo hay suficientes existencias ') 
+                
+        #Venta Reloj        
+        elif codigo == codigoReloj:
+            if existenciasReloj >= cantidad:
+                existenciasReloj -= cantidad
+                print(f'{nombreReloj} ({cantidad}) ✔ Venta exitosa')   
+            else:
+                print('ⓧ Error en la venta \nNo hay suficientes existencias ') 
+        else:
+            print('ⓧ Producto no encontrado')
+            
+        input('Enter para continuar')
+            
+            
+            
+            
+        
+        
+   
+        
+        
+    
+        
+            
+    
